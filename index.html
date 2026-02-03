@@ -225,13 +225,7 @@
             ${item.desc ? `<p style="margin:0 0 10px 0; font-size:13px; color:var(--sub);">${item.desc}</p>` : ''}
             ${item.greeting ? `<div style="background:var(--admin); padding:12px; border-radius:12px; font-size:13px; margin-bottom:10px; border-left:4px solid var(--accent);"><strong>그리팅:</strong><br>${item.greeting}</div>` : ''}
             <div style="background:var(--card); padding:15px; border-radius:12px; white-space:pre-wrap; font-size:14px; margin:10px 0;">${item.content}</div>
-            
-            ${item.link ? `
-                <div style="margin-bottom: 15px;">
-                    <a href="${item.link}" target="_blank" style="color:var(--accent); font-size:13px; text-decoration:none; display:inline-block; margin-right:10px;">🔗 원문 링크</a>
-                    <a href="https://web.archive.org/web/*/${item.link}" target="_blank" style="color:var(--sub); font-size:12px; text-decoration:none;">🏛️ 아카이브 확인</a>
-                </div>
-            ` : ''}
+            ${item.link ? `<a href="${item.link}" target="_blank" style="color:var(--accent); font-size:13px; text-decoration:none; display:block; margin-bottom:15px;">🔗 관련 링크 바로가기</a>` : ''}
             
             <div style="margin-top:20px;">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
@@ -296,12 +290,7 @@
             </details>
 
             <textarea id="editContent" rows="6" placeholder="본문 내용을 입력하세요">${item.content}</textarea>
-            
-            <div style="display:flex; gap:8px; align-items:center;">
-                <input type="text" id="editLink" placeholder="관련 링크 (URL)" value="${item.link}" style="margin:0; flex:1;">
-                <button type="button" class="btn-sm" style="background:var(--accent); color:white; height:40px;" onclick="saveToWebArchive()">박제 요청</button>
-            </div>
-            <p style="font-size:11px; color:var(--sub); margin:4px 0 10px 0;">* 박제 요청을 누르면 Wayback Machine에 저장을 시도합니다.</p>
+            <input type="text" id="editLink" placeholder="관련 링크 (URL)" value="${item.link}">
             
             <div style="margin-top:10px; border-top:1px solid var(--admin); padding-top:10px;">
                 <label style="font-size:12px; font-weight:bold;">파일 첨부</label>
@@ -326,13 +315,6 @@
                 renderFileEditor();
             }
             e.target.value = '';
-        };
-
-        window.saveToWebArchive = () => {
-            const url = document.getElementById('editLink').value;
-            if(!url || !url.startsWith('http')) { alert('올바른 URL을 입력해주세요.'); return; }
-            // Wayback machine saving bridge
-            window.open(`https://web.archive.org/save/${url}`, '_blank');
         };
 
         window.moveFile = (idx, dir) => {
